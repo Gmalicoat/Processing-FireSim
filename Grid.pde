@@ -1,19 +1,20 @@
-class Grid //<>//
+class Grid
 {
 
   int gridSize;
   Cell[][] cellData;
   float cellSize;
   Cell selectedCell;
-
   float xOffset;
   float yOffset;
+  float clock;
 
   public Grid(int gridSize)
   {
 
     this.gridSize = gridSize;
     cellData = new Cell[gridSize][gridSize];
+    this.clock = 0;
 
 
     //Creates list of cells
@@ -43,6 +44,7 @@ class Grid //<>//
 
   public void display()
   {
+    clock += (1000 * (1 / frameRate));
     xOffset = (width / 2) - (gridSize * cellSize / 2);
     yOffset = (height / 2) - (gridSize * cellSize / 2);
     float x = 0;
@@ -68,16 +70,32 @@ class Grid //<>//
 
   private void spreadBurnCheck(Cell currentCell)
   {
-    
+    if (cellData[int(currentCell.location.x)][int(currentCell.location.y)].currentCellState == cellState.PLANT)
+    {
+      {
+        currentCell.TTI += clock;
+        if (clock >= currentCell.TTI)
+        {
+          currentCell.setState(cellState.FIRE);
+        }
+        if (cellData[int(currentCell.location.x)][int(currentCell.location.y + 1)].currentCellState == cellState.FIRE || cellData[int(currentCell.location.x)][int(currentCell.location.y - 1)].currentCellState == cellState.FIRE) //<>//
+        {
+          currentCell.TTI += clock;
+          if (clock >= currentCell.TTI)
+          {
+            currentCell.setState(cellState.FIRE);
+          }
+        }
+      }
+    }
   }
 
   private void burnCheck(Cell currentCell)
   {
-    // Checks to see if cell is on fire and starts the depleating the burnCounter(WIP)
+    // Checks to see if cell is on fire and starts the depleating the burnCounter
     if (currentCell.currentCellState == cellState.FIRE)
     {
-      currentCell.burnCounter = currentCell.burnCounter - (1000 * (1 / frameRate));
-      if (currentCell.burnCounter < 1)
+      if (clock >= currentCell.burnCounter)
       {
         currentCell.setState(cellState.ASH);
       }

@@ -3,11 +3,12 @@
   public final color fireColor = color(240, 160, 50);
   public final color ashColor = color(90,90,90);
   public final color selectedColor = color(250, 255, 130);
-  final float cellSize = 15;
+  final float cellSize = 10;
   public PVector location;
   public boolean isSelected = false;
   public cellState currentCellState;
   public float burnCounter;
+  public float TTI; //Time to Ignition
 
 
   public Cell(int x, int y)

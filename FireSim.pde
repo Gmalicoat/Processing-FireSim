@@ -1,9 +1,10 @@
 Grid grid;
 int selectedGridX;
 int selectedGridY;
+
 void setup()
 {
-  size(1000, 750);
+  size(500, 500);
   grid = new Grid(50);
   frameRate(60);
 }
@@ -16,10 +17,11 @@ void draw()
 
 void mouseClicked()
 {
-  if(grid.selectedCell.isSelected) //<>//
+  if(grid.selectedCell.isSelected)
   {
     grid.selectedCell.setState(cellState.FIRE);
-  } //<>//
+    grid.selectedCell.burnCounter += grid.clock;
+  }
 }
 
 void mouseMoved()

@@ -8,11 +8,12 @@ public class BushCell extends Cell
   {
     super(x, y);
     this.burnCounter = 10 * 1000;
+    this.TTI = 5 * 1000;
   }
   
   public color getColor()
   {
-    if(super.currentCellState == cellState.FIRE) //<>//
+    if(super.currentCellState == cellState.FIRE)
     {
       return fireColor;
     } else if(super.currentCellState == cellState.ASH)

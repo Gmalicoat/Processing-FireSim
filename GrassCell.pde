@@ -6,6 +6,7 @@ public class GrassCell extends Cell
   {
     super(x, y);
     this.burnCounter = 5 * 1000;
+    this.TTI = 2.5 * 1000;
   }
 
   public color getColor()

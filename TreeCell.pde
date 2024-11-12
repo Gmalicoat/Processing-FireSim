@@ -7,6 +7,7 @@ public class TreeCell extends Cell
   {
     super(x, y);
     this.burnCounter = 15 * 1000;
+    this.TTI = 7.5 * 1000;
   }
   
   public color getColor()
