@@ -7,39 +7,18 @@ public class BushCell extends Cell
   public BushCell(int x, int y)
   {
     super(x, y);
-    this.burnCounter = 10 * 1000;
-    this.TTI = 5 * 1000;
+    this.plantColor = GREEN;
+    this.burnCounter = 3 * 1000;
+    this.TTI = 1 * 1000;
   }
-  
-  public color getColor()
-  {
-    if(super.currentCellState == cellState.FIRE)
-    {
-      return fireColor;
-    } else if(super.currentCellState == cellState.ASH)
-    {
-      return ashColor;
-    } else
-    {
-      return GREEN;
-    }
-  }
-  
-  
   
   public void display(float x, float y)
   {
     push();
-    if(super.isSelected == true)
-    {   
-      fill(super.selectedColor);
-    } else {
-      stroke(0);
-      fill(getColor());
-    }
-      rect(x, y, cellSize, cellSize);
+    stroke(0);
+    fill(super.getColor());
+    rect(x, y, cellSize, cellSize);
     pop();
   }
-  
 }
   

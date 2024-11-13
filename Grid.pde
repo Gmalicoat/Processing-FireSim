@@ -57,8 +57,9 @@ class Grid
         x = gridWidth * cellSize;
         if (cellData != null)
         {
+          //println("Updating Cell in position [", gridWidth,"] [", gridHeight, "]");
+          adjactentCellCheck(cellData[gridWidth][gridHeight]);
           burnCheck(cellData[gridWidth][gridHeight]);
-          spreadBurnCheck(cellData[gridWidth][gridHeight]);
           push();
           translate(xOffset, yOffset);
           cellData[gridWidth][gridHeight].display(x, y);
@@ -67,29 +68,30 @@ class Grid
       }
     }
   }
-
-  private void spreadBurnCheck(Cell currentCell)
+  
+  private void adjactentCellCheck(Cell currentCell)
   {
-    if (cellData[int(currentCell.location.x)][int(currentCell.location.y)].currentCellState == cellState.PLANT)
+    if(currentCell.currentCellState == cellState.FIRE) //<>//
     {
+      if(currentCell.location.x - 1 > -1 && cellData[int(currentCell.location.x - 1)][int(currentCell.location.y)].currentCellState == cellState.PLANT)
+      { //<>//
+        cellData[int(currentCell.location.x - 1)][int(currentCell.location.y)].setState(cellState.SMOLDER);
+      }
+      if(currentCell.location.x + 1 < gridSize && cellData[int(currentCell.location.x + 1)][int(currentCell.location.y)].currentCellState == cellState.PLANT)
       {
-        currentCell.TTI += clock;
-        if (clock >= currentCell.TTI)
-        {
-          currentCell.setState(cellState.FIRE);
-        }
-        if (cellData[int(currentCell.location.x)][int(currentCell.location.y + 1)].currentCellState == cellState.FIRE || cellData[int(currentCell.location.x)][int(currentCell.location.y - 1)].currentCellState == cellState.FIRE) //<>//
-        {
-          currentCell.TTI += clock;
-          if (clock >= currentCell.TTI)
-          {
-            currentCell.setState(cellState.FIRE);
-          }
-        }
+        cellData[int(currentCell.location.x + 1)][int(currentCell.location.y)].setState(cellState.SMOLDER);
+      }
+      if(currentCell.location.y - 1 > -1 && cellData[int(currentCell.location.x)][int(currentCell.location.y - 1)].currentCellState == cellState.PLANT)
+      {
+        cellData[int(currentCell.location.x)][int(currentCell.location.y - 1)].setState(cellState.SMOLDER);
+      }
+      if(currentCell.location.y + 1 < gridSize && cellData[int(currentCell.location.x)][int(currentCell.location.y + 1)].currentCellState == cellState.PLANT)
+      {
+        cellData[int(currentCell.location.x)][int(currentCell.location.y + 1)].setState(cellState.SMOLDER);
       }
     }
   }
-
+  
   private void burnCheck(Cell currentCell)
   {
     // Checks to see if cell is on fire and starts the depleating the burnCounter

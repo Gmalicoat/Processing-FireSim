@@ -6,36 +6,17 @@ public class TreeCell extends Cell
   public TreeCell(int x, int y)
   {
     super(x, y);
-    this.burnCounter = 15 * 1000;
-    this.TTI = 7.5 * 1000;
-  }
-  
-  public color getColor()
-  {
-    if(super.currentCellState == cellState.FIRE)
-    {
-      return fireColor;
-    } else if(super.currentCellState == cellState.ASH)
-    {
-      return ashColor;
-    } else
-    {
-      return VERY_DARK_GREEN;
-    }
+    this.plantColor = VERY_DARK_GREEN;
+    this.burnCounter = 5 * 1000;
+    this.TTI = 2 * 1000;
   }
   
   public void display(float x, float y)
   {
     push();
-    if(super.isSelected == true)
-    {
-      fill(super.selectedColor);
-    } else {
-      stroke(0);
-      fill(getColor());
-    }
-      rect(x, y, cellSize, cellSize);
+    stroke(0);
+    fill(super.getColor());
+    rect(x, y, cellSize, cellSize);
     pop();
   }
-  
 }
