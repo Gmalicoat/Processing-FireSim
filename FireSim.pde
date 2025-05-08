@@ -5,7 +5,7 @@ int selectedGridY;
 void setup()
 {
   size(500, 500);
-  grid = new Grid(50);
+  grid = new Grid();
   frameRate(60);
 }
 
@@ -13,6 +13,19 @@ void draw()
 {
   background(0);
   grid.display();
+  
+  //Selected rectangle placement.
+  if (grid.cellData[selectedGridX][selectedGridY].isSelected)
+  {
+    strokeWeight(1);
+    noFill();
+    stroke(grid.cellData[selectedGridX][selectedGridY].selectedColor);
+  } else
+  {
+    noStroke();
+    noFill();
+  }
+  rect(selectedGridX * Cell.cellSize, selectedGridY * Cell.cellSize, Cell.cellSize, Cell.cellSize);
 }
 
 void mouseClicked()
@@ -20,7 +33,6 @@ void mouseClicked()
   if(grid.selectedCell.isSelected)
   {
     grid.selectedCell.setState(cellState.FIRE);
-    grid.selectedCell.burnCounter += grid.clock;
   }
 }
 
@@ -41,9 +53,9 @@ void mouseMoved()
       }
     }
   }
-  if (selectedGridX < 0 || selectedGridX > grid.gridSize || selectedGridY < 0 || selectedGridY > grid.gridSize) 
+  if (selectedGridX < 0 || selectedGridX > grid.gridSize || selectedGridY < 0 || selectedGridY > grid.gridSize)
   {
-    if(grid.selectedCell != null)
+    if (grid.selectedCell != null)
     {
       grid.selectedCell.isSelected = false;
     }
